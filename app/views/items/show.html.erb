@@ -1,0 +1,19 @@
+<div class="mx-auto md:w-2/3 w-full flex flex-col items-center">
+  <div class="mx-auto bg-white p-8 rounded-lg shadow-md p-5">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
+        <%= notice %>
+      </p>
+    <% end %>
+
+    <%= render @item %>
+
+    <div class="flex items-center mt-4">
+      <%= link_to "Edit this item", edit_item_path(@item), class: "btn-primary mr-4" %>
+
+      <%= button_to "Destroy this item", item_path(@item), method: :delete, class: "btn-danger" %>
+
+      <%= link_to "Back to items", items_path, class: "btn-secondary ml-4" %>
+    </div>
+  </div>
+</div>

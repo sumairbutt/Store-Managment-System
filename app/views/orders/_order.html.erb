@@ -1,0 +1,25 @@
+<div class="p-5">
+  <div id="<%= dom_id order %>" class="bg-blue-500 text-black p-8 mb-8 rounded-lg border border-red-500">
+    <p class="my-5">
+      <strong class="block font-medium mb-1 text-xl">Order Number:</strong>
+      <div class="text-lg"><%= order.order_number %></div>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1 text-xl">Status:</strong>
+      <div class="text-lg"><%= order.status.humanize %></div>
+    </p>
+
+    <% order.items.each do |item| %>
+      <div class="border mb-5 p-5 rounded shadow-md">
+        <div class="font-bold text-xl mb-2">Item Name:</div>
+        <div><%= item.name %></div>
+
+        <div class="font-bold text-xl mt-2">Price:</div>
+        <div><%= item.price %></div>
+
+        <div class="font-bold text-xl mt-2">Description:</div>
+        <div><%= item.description %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
