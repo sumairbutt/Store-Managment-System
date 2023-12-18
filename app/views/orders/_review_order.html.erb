@@ -1,5 +1,6 @@
 <div class="p-5">
-  <div id="<%= dom_id order %>" class="bg-blue-500 text-black p-8 mb-8 rounded-lg border">
+    <h1>Order Details....</h1>
+  <div id="<%= dom_id order %>" class="bg-blue-500 text-black p-8 mb-8 rounded-lg border border-red-500">
     <p class="my-5">
       <strong class="block font-medium mb-1 text-xl">Order Number:</strong>
       <div class="text-lg"><%= order.order_number %></div>
@@ -21,9 +22,6 @@
         <div><%= item.description %></div>
       </div>
     <% end %>
-      <%= form_with(url: complete_order_path(id: order.id), method: :post, remote: true, local: false) do |form| %>
-        <%= form.hidden_field :order_id, value: order.id %>
-        <%= form.submit("Complete Order", class: "mt-3 dark:text-white flex text-center cursor-pointer bg-green-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-green-600") %>
-      <% end %>
+
   </div>
 </div>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   
   root to: "menus#index"
   post 'update_cart/:id', to: 'orders#update_cart', as: 'update_cart'
+  post 'complete_order/:id', to: 'orders#complete_order', as: 'complete_order'
 
 
   unauthenticated do

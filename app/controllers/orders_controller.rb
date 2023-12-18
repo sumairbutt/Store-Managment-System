@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: %i[ show edit update destroy complete_order ]
   before_action :create_order, only: %i[create]
   before_action :initiate_order, only: %i[update_cart]
 
@@ -50,11 +50,20 @@ class OrdersController < ApplicationController
 
   def update_cart
     @current_order.order_items.create(item_id: params["id"])
+    redirect_to menus_path
+    
   end
 
-  def initiate_order
-    @current_order = Order.create(status: "in_progress", order_number: generate_order_number)
+  def complete_order
+    respond_to do |format|
+      if @order.update(status: "completed")
+        format.html { redirect_to order_path(id: @order.id), notice: "Order Completed" }
+      else
+        format.html { redirect_to menus_path, notice: "Something went wrong" }
+      end
+    end
   end
+
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
