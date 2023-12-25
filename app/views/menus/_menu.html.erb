@@ -1,0 +1,47 @@
+<div id="<%= dom_id menu %>">
+  <div class="my-5 p-3 rounded">
+    <p class="font-bold text-black text-2xl py-3">
+      <%= menu.title %>
+    </p>
+    <p class="text-grayDark p-2 text-xl">
+      <%= menu.description %>
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <% menu.items&.each do |item| %>
+      <div class="flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+        <a href="#!">
+          <%= image_tag(item.image.attached? ? item.image : "favicon.png", class: "rounded-t-lg w-28 h-28") %>
+        </a>
+        <div class="p-6">
+          <div class="flex item-center justify-center">
+            <div>
+              <h5 class="mb-2 text-xl text-center font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                <%= item&.name.titleize %>
+              </h5>
+            </div>
+              <div class="ml-4">
+              <p class="mb-4 text-base rounded-full text-center <%= item&.available ? "text-green-500 bg-green-100" : "text-red-500 bg-red-100" %> p-1">
+                <%= item&.available %>
+              </p>
+            </div>
+          </div>
+          <p class="mb-4 text-base text-center text-grayDark dark:text-neutral-200">
+            <%= item&.description.capitalize %>
+          </p>
+          <p class="mb-4 text-base text-center text-grayDark dark:text-neutral-200">
+            <%= "$#{item&.price}" %>
+          </p>
+          <div class="text-center">
+          <%= form_with(url: update_cart_path(id: item.id), method: :post, remote: true, local: false) do |form| %>
+            <%= form.hidden_field :item_id, value: item.id %>
+            <%= form.submit("Add to Cart", class: "mt-3 dark:text-white cursor-pointer bg-red-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-red-600") %>
+          <% end %>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

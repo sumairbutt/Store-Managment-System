@@ -1,0 +1,80 @@
+<%= form_with(model: item, class: "contents") do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :select_menu %>
+    <%= form.select :menu_id, options_for_select(Menu.pluck(:title, :id), selected: @item.menu), {prompt: "Select Menu for Item"}, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", required: true %>
+  </div>
+
+<div class="my-5">
+    <%= form.label :image %>
+    <div class="flex items-center">
+      <div class="relative">
+        <%= form.file_field :image, class: "hidden", id: "item_image" %>
+        <img id="image-preview" class="block w-20 h-20 object-cover rounded-full border border-gray-200" alt="Image Preview" src="<%= item.image.attached? ? url_for(item.image) : asset_path('favicon.png') %>" />
+
+      </div>
+      <label for="item_image" class="ml-3 cursor-pointer px-2 py-1 rounded bg-blue text-white">
+        Change Image
+      </label>
+    </div>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.text_field :description, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :price %>
+    <%= form.number_field :price, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :available %>
+    <%= form.check_box :available, class: "block mt-2 h-5 w-5" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
+
+
+<script>
+  // app/javascript/packs/image_preview.js
+document.addEventListener("DOMContentLoaded", function () {
+  const input = document.getElementById("item_image");
+  const preview = document.getElementById("image-preview");
+
+  input.addEventListener("change", function () {
+    const file = input.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+});
+
+</script>

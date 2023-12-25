@@ -1,0 +1,50 @@
+<div class="p-5">
+<div class="flex justify-end">
+    <button id="printButton" class="bg-blue text-white text-black p-3 mb-2 rounded-lg border">
+      <i class="fas fa-print"></i> Print
+    </button>
+  </div>
+  <div style="margin-right: 150px;">
+  <div id="<%= dom_id @order %>" class="bg-blue-500 text-black p-8 mb-8 rounded-lg border">
+    <div class="font-bold mb-3 text-4xl text-center text-black">Pizza Studio</div>
+    <div class="text-xl text-center text-black">+92 313 23 23233112</div>
+    <div class="text-xl text-center text-black">53-C washington DC</div>
+    <div class="flex flex-col items-center justify-center py-3">
+      <div class="flex item-center justify-center gap-2">
+        <strong class="block font-medium text-2xl">Order Number:</strong>
+        <div class="block font-medium text-2xl"><%= @order.order_number %></div>
+      </div>
+      
+      <div class="flex item-center justify-center gap-2">
+        <strong class="block font-medium text-2xl">Status:</strong>
+        <div class="block font-medium text-2xl"><%= @order.status.humanize %></div>
+      </div>
+    </div>
+    <% @order.items.each do |item| %>
+    <div class="border mb-5 p-5 rounded shadow-md">
+        <div class="font-bold text-xl mb-2">Item Name:</div>
+        <div><%= item.name %></div>
+
+        <div class="font-bold text-xl mt-2">Price:</div>
+        <div><%= item.price %></div>
+
+        <div class="font-bold text-xl mt-2">Description:</div>
+        <div><%= item.description %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+</div>
+<script>
+  document.getElementById('printButton').addEventListener('click', function() {
+    window.print();
+  });
+</script>
+
+<style>
+  @media print {
+    #printButton {
+      display: none;
+    }
+  }
+</style>
