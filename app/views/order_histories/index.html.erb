@@ -4,6 +4,88 @@
   </div>
 
   <div id="order_histories" class="min-w-full">
-    <%= render @order_histories %>
+    <% @order_histories.each do |order| %>
+      <div class="p-5">
+        <div id="<%= dom_id order %>" class="bg-blue-500 text-black p-8 mb-8 rounded-lg border">
+          <div class="flex item-center justify-between">
+          <div class="my-5">
+            <strong class="block font-medium mb-1 text-xl">Order Number:</strong>
+            <div class="text-lg text-red-500"><%= order.order_number %></div>
+          </div>
+          <div class="my-5">
+            <strong class="block font-medium mb-1 text-xl">Status:</strong>
+            <div class="text-lg text-red-500"><%= order.status.humanize %></div>
+          </div>
+          <div class="my-5">
+            <div class="text-sm text-red-500"><%= order.created_at.strftime("%A %e %B %Y at %T") %></div>
+          </div>
+          </div>
+          <% order.items.each do |item| %>
+            <div class="border mb-5 p-5 rounded shadow-md">
+              <div class="font-bold text-xl mb-2">Item Name:</div>
+              <div><%= item.name %></div>
+
+              <div class="font-bold text-xl mt-2">Price:</div>
+              <div><%= item.price %></div>
+
+              <div class="font-bold text-xl mt-2">Description:</div>
+              <div><%= item.description %></div>
+            </div>
+          <% end %>
+          <div class="flex item-center justify-between">
+            <%= form_with(url: order_path(id: order.id), method: :delete, remote: true, local: false) do |form| %>
+              <%= form.hidden_field :order_id, value: order.id %>
+              <%= form.submit("Delete Order", class: "mt-3 dark:text-white flex text-center cursor-pointer bg-red-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-red-600") %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="text-center my-4">
+    <div class="apple_pagination">
+      <%= will_paginate @order_histories %>
+    </div>
+    </div>
   </div>
 </div>
+
+
+<style>
+  .apple_pagination {
+  background: grayDark;
+  text-align: center;
+  padding: 1em;
+  cursor: default; }
+.apple_pagination a, .apple_pagination span {
+  padding: 0.2em 0.3em; }
+.apple_pagination .disabled {
+  color: #2564ec; }
+.apple_pagination .current {
+  background-color: #2564ec;
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  line-height: 1.5;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
+.apple_pagination a {
+  text-decoration: none;
+  color: #2564ec; }
+.apple_pagination a:hover, .apple_pagination a:focus {
+  text-decoration: underline; }
+.page_info{
+  color: #2564ec;
+}
+.next_page, .previous_page{
+  border: 1px solid #2564ec;
+  border-radius: 5px;
+  padding: 2px;
+  color: #2564ec !important;
+}
+.current{
+  color: white;
+  
+  background-color: #2564ec !important;
+}

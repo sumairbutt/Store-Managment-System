@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     private
     
     def current_order
-        Order.find_by(id: session[:current_order_id])
+        Order.find_by(id: session[:current_order_id], status: "in_progress")
     end
 
     def generate_order_number

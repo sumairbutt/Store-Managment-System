@@ -3,7 +3,7 @@ class OrderHistoriesController < ApplicationController
 
   # GET /order_histories or /order_histories.json
   def index
-    @order_histories = OrderHistory.all
+    @order_histories = Order.where(status: "completed").paginate(page: params[:page], per_page: 10)
   end
 
   # GET /order_histories/1 or /order_histories/1.json

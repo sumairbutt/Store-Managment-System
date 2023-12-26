@@ -12,7 +12,7 @@
     <% menu.items&.each do |item| %>
       <div class="flex flex-col rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
         <a href="#!">
-          <%= image_tag(item.image.attached? ? item.image : "favicon.png", class: "rounded-t-lg w-28 h-28") %>
+          <%= image_tag(item.image.attached? ? item.image : "favicon.png", class: "rounded-t-lg") %>
         </a>
         <div class="p-6">
           <div class="flex item-center justify-center">
